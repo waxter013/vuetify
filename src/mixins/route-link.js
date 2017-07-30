@@ -8,8 +8,14 @@ export default {
     nuxt: Boolean,
     replace: Boolean,
     router: Boolean,
-    ripple: Boolean,
-    tag: String
+    ripple: {
+      type: Boolean,
+      default: false
+    },
+    tag: {
+      type: String,
+      default: 'a'
+    },
   },
 
   methods: {
@@ -17,14 +23,14 @@ export default {
     generateRouteLink () {
       let exact = this.exact
       let tag
-
+  
       const data = {
         attrs: { disabled: this.disabled },
         class: this.classes,
         props: {},
         directives: [{
           name: 'ripple',
-          value: this.ripple || false
+          value: this.ripple
         }],
         on: Object.assign({
           click: this.click
@@ -46,7 +52,7 @@ export default {
         data.props.append = this.append
         data.props.replace = this.replace
       } else {
-        tag = this.href && 'a' || this.tag || 'a'
+        tag = this.href && 'a' || this.tag
 
         if (tag === 'a') {
           data.attrs.href = this.href || 'javascript:;'
